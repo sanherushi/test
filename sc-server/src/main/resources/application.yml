@@ -1,0 +1,90 @@
+#主配置文件
+spring:
+  application:
+    name: eureka-server
+  profiles:
+    active: default
+
+---
+#default节点配置-------------------------
+server:
+  port: 8761
+spring:
+  profiles: default
+management:
+  server:
+    port: 9001
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /monitor
+eureka:
+  server:
+    #在开发中可以先将保护模式给关了，我们在Eureka服务端加上一条配置:
+    enable-self-preservation: false
+  client:
+    #表示是否将服务注册到Eureka服务端，由于自身就是Eureka服务端，所以设置为false；
+    register-with-eureka: false
+    #表示是否从Eureka服务端获取服务信息，因为这里只搭建了一个Eureka服务端，并不需要从别的Eureka服务端同步服务信息，所以这里设置为false；
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+#结束------------------
+
+---
+#node1节点配置-------------------------
+server:
+  port: 8761
+spring:
+  profiles: node1
+eureka:
+  server:
+    enable-self-preservation: true
+  instance:
+    hostname: node1
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://node1:8761/eureka,http://node2:8762/eureka,http://node3:8763/eureka
+#结束------------------
+
+---
+#node2节点配置-------------------------
+server:
+  port: 8762
+spring:
+  profiles: node2
+eureka:
+  server:
+    enable-self-preservation: true
+  instance:
+    hostname: node2
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://node1:8761/eureka,http://node2:8762/eureka,http://node3:8763/eureka
+#结束------------------
+
+---
+#node3节点配置-------------------------
+server:
+  port: 8763
+spring:
+  profiles: node3
+eureka:
+  server:
+    enable-self-preservation: true
+  instance:
+    hostname: node3
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://node1:8761/eureka,http://node2:8762/eureka,http://node3:8763/eureka
+#结束------------------

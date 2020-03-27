@@ -11,6 +11,7 @@
         <module>sc-user</module>
         <module>sc-order</module>
         <module>sc-gateways</module>
+        <module>sc-config</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

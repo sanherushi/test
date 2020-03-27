@@ -12,6 +12,7 @@
         <module>sc-order</module>
         <module>sc-gateways</module>
         <module>sc-config</module>
+        <module>config-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
